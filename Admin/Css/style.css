@@ -1,0 +1,211 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Playfair+Display:700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative:700&display=swap");
+
+/* ========== Base Typography ========== */
+body {
+  font-size: 13px;
+  font-family: "Roboto", sans-serif;
+}
+.error {
+  color: red;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.info-box-text {
+  white-space: normal !important;
+}
+
+/* ========== Header & Navigation ========== */
+.main-header {
+  background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  padding: 0 20px;
+}
+.main-header .logo a {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: linear-gradient(45deg, #f5e06b, #d4af37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 2px 4px rgba(0, 0, 0, 0.4);
+  text-transform: uppercase;
+}
+.main-header .navbar {
+  background: transparent;
+}
+.main-header .sidebar-toggle {
+  display: none !important;
+}
+.main-header .navbar-custom-menu .user-menu > a {
+  padding: 10px 15px;
+  border-left: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+}
+.main-header .navbar-custom-menu .user-menu .dropdown-menu {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ========== Sidebar Menu ========== */
+.skin-blue .sidebar-menu > li:hover > a,
+.skin-blue .sidebar-menu > li.active > a {
+  color: #fff;
+  background-color: #4c4c4c;
+  border-left-color: #000;
+}
+.sidebar-menu .treeview-menu > li > a {
+  font-size: 15px;
+}
+
+/* ========== Content Header ========== */
+.content-header {
+  overflow: hidden;
+}
+.content-header .content-header-left {
+  float: left;
+  padding-top: 5px;
+}
+.content-header .content-header-right {
+  float: right;
+}
+.content-header > h1 {
+  position: relative;
+  margin: 0;
+  padding: 0 0 5px 30px;
+  font-size: 24px;
+  color: #333;
+}
+.content-header > h1:before {
+  content: "\f18e";
+  font-family: "FontAwesome";
+  font-size: 26px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: #3c8dbc;
+}
+.content-header .content-header-right a {
+  background-color: #333;
+  border: 1px solid #333;
+  color: #fff;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  text-decoration: none;
+  border-radius: 4px;
+}
+
+/* ========== Utility Classes ========== */
+.disable-click { pointer-events: none !important; }
+.pt10 { padding-top: 10px; }
+.pt20 { padding-top: 20px; }
+.ml10 { margin-left: 10px; }
+.bg-g { background: #d3f9b4 !important; }
+.bg-r { background: #f9cccc !important; }
+
+/* ========== Tables (rTable) ========== */
+.rTable {
+  display: table;
+  width: 100%;
+  border: 1px solid #999;
+}
+.rTableRow { display: table-row; }
+.rTableHead,
+.rTableCell {
+  display: table-cell;
+  padding: 3px 10px;
+  border: 1px solid #999;
+}
+.rTableHeading,
+.rTableFoot {
+  background-color: #ddd;
+  font-weight: bold;
+}
+.rTableHeading { display: table-header-group; }
+.rTableFoot    { display: table-footer-group; }
+
+/* ========== Dashboard Metric Boxes ========== */
+.small-box {
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff !important;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  padding: 20px;
+  transition: transform .3s, box-shadow .3s;
+}
+.small-box:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(219, 8, 8, 0.12);
+}
+.small-box .inner,
+.small-box .icon {
+  background: transparent !important;
+  color: #091df8 !important;
+}
+.small-box h3 {
+  font-size: 2.2rem !important;
+  font-weight: 700;
+  margin: 0 !important;
+  color: #333 !important;
+}
+.small-box p {
+  font-size: 1.5rem !important;
+  color: #666 !important;
+  margin: 5px 0 0 !important;
+}
+.small-box .icon {
+  font-size: 3rem;
+  opacity: 0.2;
+}
+.small-box .icon:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #fff !important;
+  z-index: -1;
+}
+.small-box .small-box-footer {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  background: transparent !important;
+  box-shadow: none !important;
+  border-top: none !important;
+  color: #666 !important;
+  font-size: 1.2rem;
+  text-decoration: none;
+}
+
+/* Accent Color Variables (apply via classes) */
+.bg-aqua       { --box-color: #00c0ef; }
+.bg-red        { --box-color: #dd4b39; }
+.bg-green      { --box-color: #00a65a; }
+.bg-yellow     { --box-color: #f39c12; }
+.bg-light-blue { --box-color: #3c8dbc; }
+
+/* ========== Responsive Adjustments ========== */
+@media (max-width: 992px) {
+  .small-box {
+    flex-direction: column;
+    text-align: center;
+  }
+  .small-box .icon:before {
+    right: 50%;
+    transform: translate(50%, -50%);
+  }
+}
