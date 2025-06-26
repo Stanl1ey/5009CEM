@@ -1,90 +1,120 @@
-<?php require_once('header.php'); ?>
+<?php
+require_once('header.php');  // includes AdminLTE CSS/JS
+?>
+
+<!-- page-specific CSS overrides -->
+<style>
+  /* 1) Black underline beneath the page title */
+  .content-header {
+    border-bottom: 1px solid #000 !important;
+  }
+  /* 2) Black background + white text for the DataTable header */
+  #example1 thead th {
+    background-color: #000 !important;
+    border-color:     #000 !important;
+    color:            #fff !important;
+  }
+  /* 3) Force all rows to plain white (remove any striping classes) */
+  #example1 tbody tr,
+  .bg-g, .bg-r {
+    background-color: #fff !important;
+  }
+</style>
 
 <section class="content-header">
-	<div class="content-header-left">
-		<h1>View End Level Categories</h1>
-	</div>
-	<div class="content-header-right">
-		<a href="end-category-add.php" class="btn btn-primary btn-sm">Add New</a>
-	</div>
+  <div class="content-header-left">
+    <h1>
+      <i class="fa fa-layer-group text-primary"></i>
+      View End Level Categories
+    </h1>
+  </div>
+  <div class="content-header-right">
+    <a href="end-category-add.php" class="btn btn-success btn-md">
+      <i class="fa fa-plus-circle"></i> Add New
+    </a>
+  </div>
+  <div class="clearfix"></div>
 </section>
-
 
 <section class="content">
-
-  <div class="row">
-    <div class="col-md-12">
-
-
-      <div class="box box-info">
-        
-        <div class="box-body table-responsive">
-          <table id="example1" class="table table-bordered table-hover table-striped">
-			<thead>
-			    <tr>
-			        <th>#</th>
-			        <th>End Level Category Name</th>
-                    <th>Mid Level Category Name</th>
-                    <th>Top Level Category Name</th>
-			        <th>Action</th>
-			    </tr>
-			</thead>
-            <tbody>
-            	<?php
-            	$i=0;
-            	$statement = $pdo->prepare("SELECT * 
-                                    FROM tbl_end_category t1
-                                    JOIN tbl_mid_category t2
-                                    ON t1.mcat_id = t2.mcat_id
-                                    JOIN tbl_top_category t3
-                                    ON t2.tcat_id = t3.tcat_id
-                                    ORDER BY t1.ecat_id DESC
-                                    ");
-            	$statement->execute();
-            	$result = $statement->fetchAll(PDO::FETCH_ASSOC);							
-            	foreach ($result as $row) {
-            		$i++;
-            		?>
-					<tr>
-	                    <td><?php echo $i; ?></td>
-	                    <td><?php echo $row['ecat_name']; ?></td>
-                        <td><?php echo $row['mcat_name']; ?></td>
-                        <td><?php echo $row['tcat_name']; ?></td>
-	                    <td>
-	                        <a href="end-category-edit.php?id=<?php echo $row['ecat_id']; ?>" class="btn btn-primary btn-xs">Edit</a>
-	                        <a href="#" class="btn btn-danger btn-xs" data-href="end-category-delete.php?id=<?php echo $row['ecat_id']; ?>" data-toggle="modal" data-target="#confirm-delete">Delete</a>
-	                    </td>
-	                </tr>
-            		<?php
-            	}
-            	?>
-            </tbody>
-          </table>
-        </div>
-      </div>
-  
-
+  <div class="box box-info">
+    <div class="box-body table-responsive">
+      <table id="example1" class="table table-bordered table-hover table-striped">
+        <thead>
+          <tr>
+            <th width="40">#</th>
+            <th>End Level Category Name</th>
+            <th>Mid Level Category Name</th>
+            <th>Top Level Category Name</th>
+            <th width="120">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          $i = 0;
+          $sql = "
+            SELECT 
+              e.ecat_id, 
+              e.ecat_name,
+              m.mcat_name,
+              t.tcat_name
+            FROM tbl_end_category AS e
+            JOIN tbl_mid_category AS m ON e.mcat_id = m.mcat_id
+            JOIN tbl_top_category AS t ON m.tcat_id = t.tcat_id
+            ORDER BY e.ecat_id ASC
+          ";
+          $stmt = $pdo->prepare($sql);
+          $stmt->execute();
+          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)):
+            $i++;
+          ?>
+          <tr>
+            <td><?= $i; ?></td>
+            <td><?= htmlspecialchars($row['ecat_name']); ?></td>
+            <td><?= htmlspecialchars($row['mcat_name']); ?></td>
+            <td><?= htmlspecialchars($row['tcat_name']); ?></td>
+            <td>
+              <a href="end-category-edit.php?id=<?= $row['ecat_id']; ?>"
+                 class="btn btn-primary btn-xs">
+                <i class="fa fa-pencil"></i> Edit
+              </a>
+              <button class="btn btn-danger btn-xs"
+                      data-toggle="modal"
+                      data-target="#confirm-delete"
+                      data-href="end-category-delete.php?id=<?= $row['ecat_id']; ?>">
+                <i class="fa fa-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+          <?php endwhile; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </section>
 
-
-<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure want to delete this item?</p>
-                <p style="color:red;">Be careful! All products under this end category will be deleted from all the tables like order table, payment table, size table, color table, rating table etc.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger btn-ok">Delete</a>
-            </div>
-        </div>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-danger">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">&times;</button>
+        <h4 class="modal-title">
+          <i class="fa fa-exclamation-triangle"></i> Confirm Deletion
+        </h4>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this end-level category?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default"
+                data-dismiss="modal">Cancel</button>
+        <a class="btn btn-danger btn-ok">Delete</a>
+      </div>
     </div>
+  </div>
 </div>
-
 
 <?php require_once('footer.php'); ?>
