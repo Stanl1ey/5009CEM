@@ -169,19 +169,7 @@ if (isset($_POST['form1'])) {
         
         // Sending Email
       
-        mail($to, $subject, $message, $headers);
-
-        unset($_POST['cust_name']);
-        unset($_POST['cust_cname']);
-        unset($_POST['cust_email']);
-        unset($_POST['cust_phone']);
-        unset($_POST['cust_address']);
-        unset($_POST['cust_city']);
-        unset($_POST['cust_state']);
-        unset($_POST['cust_zip']);
-        
-        
-        $success_message = LANG_VALUE_152;
+        $success_message = "Your registration is completed. Now You Can Login Via Registered Email.";
     }
 }
 ?>
